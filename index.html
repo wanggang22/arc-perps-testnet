@@ -235,11 +235,12 @@ tbody td:first-child{text-align:left} tbody tr:last-child td{border-bottom:none}
 </main>
 
 <div class="disclaimer">
-  <b>Real deployment.</b> These are live contracts on <b>Arc testnet</b> (chainId 5042002): a mintable test USDC and the
-  multi-market <b>PerpCorePyth</b> engine. Prices come from the <b>Pyth Network</b> oracle on Arc
-  (0x2880aB…); a keeper posts fresh Pyth updates and runs liquidations + resting-order fills. Collateral is test USDC
+  <b>Real deployment.</b> Live contracts on <b>Arc testnet</b> (chainId 5042002): a mintable test USDC and the
+  multi-market <b>PerpCore</b> engine. Prices are <b>real market prices</b> pulled from Pyth's Hermes feed, then
+  signed by the protocol's keeper and pushed on-chain every ~12s (a keeper-committee model). Collateral is test USDC
   (faucet-able); on mainnet the collateral becomes native USDC (0x3600…). Not audited — testnet only.
-  See <b>DEPLOYMENT.md</b>, <b>ARCHITECTURE.md</b>, and <b>PRODUCT.md</b>.
+  <br><i>Note: Pyth's on-chain pull oracle was used earlier but broke Arc-wide after Pyth's Aug-2026 signer change
+  (InvalidWormholeVaa); this deployment self-signs real Hermes prices to stay live.</i>
 </div>
 
 <div class="toast" id="toast"></div>

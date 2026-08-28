@@ -35,7 +35,7 @@ const PYTH_ABI = ["function getUpdateFee(bytes[] updateData) view returns (uint2
 const roProvider = new E.JsonRpcProvider(CFG.rpc, CFG.chainId);
 const perpRO = new E.Contract(CFG.perp, PERP_ABI, roProvider);
 const usdcRO = new E.Contract(CFG.usdc, USDC_ABI, roProvider);
-const pythRO = new E.Contract(CFG.pyth, PYTH_ABI, roProvider);
+const pythRO = CFG.pyth ? new E.Contract(CFG.pyth, PYTH_ABI, roProvider) : null; // B1 has no on-chain Pyth
 
 // Pull fresh Pyth prices from Hermes and post them on-chain, so a user's own
 // trade never depends on our keeper being online.
@@ -129,19 +129,9 @@ const App = {
     const fee = await pythRO.getUpdateFee(data);
     await this.tx(this.perp.refresh(data, { value: fee }), "Refresh Pyth price");
   },
-  // Run a trade; if it reverts because the on-chain price is stale, post a fresh
-  // Pyth update and retry once — so trading works even when no keeper is running.
-  async trade(fn, label) {
-    try { await this.tx(fn(), label); }
-    catch (e) {
-      const m = (e.shortMessage || e.message || "").toLowerCase();
-      if (m.includes("stale") || m.includes("price")) {
-        this.toast("Price stale — posting a fresh Pyth update…", "pending");
-        try { await this.refreshPrice(); await this.tx(fn(), label); }
-        catch (e2) { /* already toasted */ }
-      }
-    }
-  },
+  // B1: prices are kept fresh by the keeper (12s). No client-side self-refresh
+  // (the push oracle has no refresh() and users can't self-sign).
+  async trade(fn, label) { await this.tx(fn(), label); },
 
   async ensureAllowance(amount) {
     const a = await this.usdc.allowance(this.account, CFG.perp);

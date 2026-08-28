@@ -1,10 +1,11 @@
 window.ARC_PERP = {
   "chainId": 5042002,
   "rpc": "https://rpc.testnet.arc.network",
-  "oracle": "pyth",
-  "pyth": "0x2880aB155794e7179c9eE2e38200202908C17B43",
+  "oracle": "self-signed-push",
+  "hermes": "https://pyth.dourolabs.app/hermes/v2/updates/price/latest",
   "usdc": "0x68C399aEDAFC20e1dAafde7948Da893D34fD1D43",
-  "perp": "0xb3fEdcCd83F16873b1cEa0956F34D36a55bCD52d",
+  "perp": "0xF6a0143ACb280E09B8ea86d5b0a1AeADd98a6090",
+  "oracleSigner": "0x555bF34eB7838e24D6D5f36b892aCD8033f333C2",
   "markets": [
     {
       "id": 1,
@@ -17,14 +18,6 @@ window.ARC_PERP = {
       "feed": "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
     }
   ],
-  "hermes": "https://hermes.pyth.network/v2/updates/price/latest",
-  "explorer": "https://explorer.testnet.arc.network",
-  "deployedAt": "2026-08-12T10:23:09.695Z",
-  "deployBlock": 56597878,
-  "governance": {
-    "timelock": "0xab7DD367f6154C8e4a20370e626751C5E035Fd60",
-    "admin": "0x2eA729df4b0E44Bf1dD9C5277292641F0f7A3571",
-    "guardian": "0x2eA729df4b0E44Bf1dD9C5277292641F0f7A3571",
-    "delaySeconds": 60
-  }
+  "explorer": "https://testnet.arcscan.app",
+  "deployedAt": "2026-08-28T04:56:10.698Z"
 };
